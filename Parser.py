@@ -95,9 +95,18 @@ class Address():
         args["register"] = Register(value[:indicator]) if indicator != -1 else Register(value)
         
         if indicator != -1:
+            try:
+                offset = value[value.index('#')+1:]
+                offset_numerical = int(offset, 0)
+                args["offset"] = IntegerLiteral(offset_numerical)
+            except ValueError:
+                # find the second , and assign the offset to be register listed after
+                args["offset"] = Register(value[:value[:indicator].find(',')])
+
+        #if indicator != -1:
             # The string has two args
             # The +2 here is because of the ', #' that will be at index "indicator"
-            args["offset"] = IntegerLiteral(int(value[value.index('#')+1:]))
+            #args["offset"] = IntegerLiteral(int(value[value.index('#')+1:], 0))
         
         return args
         
@@ -241,11 +250,12 @@ class Parser:
             
             # Check if a number
             if self.isNumber(arg):
-                arguments.append(IntegerLiteral(int(arg[1:] if arg.startswith('#') or arg.startswith('$') else arg)))
+                arguments.append(IntegerLiteral(int(arg[1:] if arg.startswith('#') or
+                arg.startswith('$') else arg, 0)))
             # ! This notation can also be used in ARM for LDR
             elif re.search(r"\.long|\.value", instruction) and self.isNumber(arg):
                 # in case its a global variable
-                arguments.append(IntegerLiteral(int(arg)))
+                arguments.append(IntegerLiteral(int(arg, 0)))
             elif arg[0] == ".":
                 arguments.append(Location(arg, line_number))
             # check if a location
