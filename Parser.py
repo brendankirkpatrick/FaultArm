@@ -184,7 +184,11 @@ class Parser:
         program = []
         line_number = 1
 
-        global attribute_1, attribute_2 # For determining optimization level
+        # For determining optimization level
+        global attribute_1, attribute_2
+        attribute_1 = ""
+        attribute_2 = ""
+
         for line in lines:
             s = line.strip()
             # Line is a location 
@@ -217,6 +221,8 @@ class Parser:
         # if we successfully received both attributes, we can assign an optimization level to the program
         if attribute_1 and attribute_2:
             self.opt = optimization_levels[(attribute_1, attribute_2)]
+        else:
+            self.opt = ""
 
         self.program = program
         self.total_lines = line_number
