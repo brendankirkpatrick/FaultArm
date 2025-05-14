@@ -215,7 +215,7 @@ class LoopCheck():
                         # This is mainly to let "Rich", the library we use to print tables,
                         # To leave the content with brackets unprocessed, or not rendered.
                         if type(arg) == Address:
-                            arguments.append(f"\{arg.value}")
+                            arguments.append(f"{arg.value}")
                         else: arguments.append(str(arg))
                     table.add_row(f"{line.line_number}", f"{line.name} {', '.join(str(argument) for argument in arguments)}")
 
