@@ -22,8 +22,8 @@ class Analyzer():
         
         # ! Outdated branch pattern detection
         # self.branchV1_detector = BranchV1(filename, total_lines, directory_name)
-        self.branchV2_detector = BranchV2(filename, parsed_data.arch.name, parsed_data.opt, directory_name, sensitivity=4)
-        self.constant_detector = ConstantCoding(filename, parsed_data.arch.name, parsed_data.opt, total_lines, directory_name, sensitivity=4)
+        self.branchV2_detector = BranchV2(filename, parsed_data.arch.name, parsed_data.opt, directory_name, sensitivity=2)
+        self.constant_detector = ConstantCoding(filename, parsed_data.arch.name, parsed_data.opt, total_lines, directory_name, sensitivity=2)
         self.loop_detector = LoopCheck(filename, parsed_data.arch.name, parsed_data.opt, total_lines, directory_name)
         self.bypass_detector = Bypass(filename, parsed_data.arch.name, parsed_data.opt, total_lines, directory_name)
         # if self.create_directory(console):
